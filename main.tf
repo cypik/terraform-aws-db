@@ -49,10 +49,8 @@ resource "aws_db_subnet_group" "this" {
 
 resource "aws_db_parameter_group" "this" {
   count = var.enabled ? 1 : 0
+  family     = var.family
 
-  name        = module.labels.id
-  description = local.description
-  family      = var.family
   dynamic "parameter" {
     for_each = var.parameters
     content {
@@ -61,6 +59,7 @@ resource "aws_db_parameter_group" "this" {
       apply_method = lookup(parameter.value, "apply_method", null)
     }
   }
+
   tags = merge(
     module.labels.tags,
     var.db_parameter_group_tags,
@@ -68,10 +67,12 @@ resource "aws_db_parameter_group" "this" {
       "Name" = format("%s%sparameter", module.labels.id, var.delimiter)
     }
   )
+
   lifecycle {
     create_before_destroy = true
   }
 }
+
 
 resource "aws_db_option_group" "this" {
   count                    = var.enabled ? 1 : 0
@@ -113,6 +114,7 @@ resource "aws_db_option_group" "this" {
     create_before_destroy = true
   }
 }
+
 
 resource "aws_cloudwatch_log_group" "this" {
   for_each = toset([for log in var.enabled_cloudwatch_logs_exports : log if var.enabled && var.enabled_cloudwatch_log_group && !var.use_identifier_prefix])
@@ -237,6 +239,7 @@ resource "aws_security_group_rule" "ingress" {
   security_group_id = join("", aws_security_group.default[*].id)
 }
 
+
 resource "aws_kms_key" "default" {
   count = var.kms_key_enabled && var.kms_key_id == "" ? 1 : 0
 
@@ -333,12 +336,10 @@ resource "aws_db_instance" "this" {
       enabled = try(blue_green_update.value.enabled, null)
     }
   }
-
   snapshot_identifier       = var.snapshot_identifier
   copy_tags_to_snapshot     = var.copy_tags_to_snapshot
   skip_final_snapshot       = var.skip_final_snapshot
   final_snapshot_identifier = module.labels.id
-
   #tfsec:ignore:aws-rds-enable-performance-insights
   performance_insights_enabled          = var.performance_insights_enabled
   performance_insights_retention_period = var.performance_insights_enabled ? var.performance_insights_retention_period : null
@@ -374,7 +375,7 @@ resource "aws_db_instance" "this" {
     for_each = var.s3_import != null ? [var.s3_import] : []
 
     content {
-      source_engine         = "mysql"
+      source_engine         = ""
       source_engine_version = s3_import.value.source_engine_version
       bucket_name           = s3_import.value.bucket_name
       bucket_prefix         = lookup(s3_import.value, "bucket_prefix", null)
@@ -487,7 +488,7 @@ resource "aws_db_instance" "read" {
     for_each = var.s3_import != null ? [var.s3_import] : []
 
     content {
-      source_engine         = "mysql"
+      source_engine         = ""
       source_engine_version = s3_import.value.source_engine_version
       bucket_name           = s3_import.value.bucket_name
       bucket_prefix         = lookup(s3_import.value, "bucket_prefix", null)

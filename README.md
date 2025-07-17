@@ -291,15 +291,15 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 6.0.0-beta3 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | 3.7.2 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.99.1 |
+| <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 4.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.0.0-beta3 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.99.1 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -311,29 +311,29 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 
 | Name | Type |
 |------|------|
-| [aws_cloudwatch_log_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/cloudwatch_log_group) | resource |
-| [aws_db_instance.read](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_instance) | resource |
-| [aws_db_instance.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_instance) | resource |
-| [aws_db_option_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_option_group) | resource |
-| [aws_db_parameter_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_parameter_group) | resource |
-| [aws_db_subnet_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_subnet_group) | resource |
-| [aws_iam_role.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy.inline_policies](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role_policy) | resource |
-| [aws_iam_role_policy_attachment.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.managed_policies](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_kms_alias.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/kms_alias) | resource |
-| [aws_kms_key.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/kms_key) | resource |
-| [aws_security_group.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group) | resource |
-| [aws_security_group_rule.egress](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group_rule) | resource |
-| [aws_security_group_rule.egress_ipv6](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group_rule) | resource |
-| [aws_security_group_rule.ingress](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group_rule) | resource |
-| [aws_ssm_parameter.secret-endpoint](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/ssm_parameter) | resource |
-| [random_id.password](https://registry.terraform.io/providers/hashicorp/random/3.7.2/docs/resources/id) | resource |
-| [random_id.snapshot_identifier](https://registry.terraform.io/providers/hashicorp/random/3.7.2/docs/resources/id) | resource |
-| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/caller_identity) | data source |
-| [aws_iam_policy_document.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/iam_policy_document) | data source |
-| [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/partition) | data source |
+| [aws_cloudwatch_log_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
+| [aws_db_instance.read](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | resource |
+| [aws_db_instance.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | resource |
+| [aws_db_option_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_option_group) | resource |
+| [aws_db_parameter_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group) | resource |
+| [aws_db_subnet_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group) | resource |
+| [aws_iam_role.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.inline_policies](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy_attachment.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.managed_policies](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_kms_alias.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_alias) | resource |
+| [aws_kms_key.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
+| [aws_security_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group_rule.egress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.egress_ipv6](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.ingress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_ssm_parameter.secret-endpoint](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
+| [random_id.password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [random_id.snapshot_identifier](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
 
 ## Inputs
 
