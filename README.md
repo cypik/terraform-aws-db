@@ -23,7 +23,7 @@ To use this module, you can include it in your Terraform configuration. Here's a
 ```hcl
 module "mariadb" {
   source      = "cypik/db/aws"
-  version     = "1.0.3"
+  version     = "1.0.2"
 
   name        = "mariadb"
   environment = "test22"
@@ -69,7 +69,7 @@ module "mariadb" {
 ```hcl
 module "mysql" {
   source                          = "cypik/db/aws"
-  version                         =  "1.0.3"
+  version                         =  "1.0.2"
   name        = "mysql"
   environment = "test"
   label_order = ["environment", "name"]
@@ -138,7 +138,7 @@ module "mysql" {
 ```hcl
 module "oracle" {
   source                              = "cypik/db/aws"
-  version                             = "1.0.3"
+  version                             = "1.0.2"
   name        = "oracle"
   environment = "test"
   label_order = ["environment", "name"]
@@ -184,7 +184,7 @@ module "oracle" {
 ```hcl
 module "postgresql" {
   source                          = "cypik/db/aws"
-  version                         = "1.0.3"
+  version                         = "1.0.2"
 
   name        = "postgresql"
   environment = "test"
@@ -230,7 +230,7 @@ module "postgresql" {
 ```hcl
 module "mysql" {
   source                 = "cypik/db/aws"
-  version                = "1.0.3"
+  version                = "1.0.2"
   name                   = "rds"
   environment            = "test"
   label_order            = ["environment", "name"]
