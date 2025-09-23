@@ -23,7 +23,7 @@ To use this module, you can include it in your Terraform configuration. Here's a
 
 ```hcl
 module "mariadb" {
-  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.0"
+  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.1"
   name              = "mariadb"
   engine            = "MariaDB"
   engine_version    = "10.6.10"
@@ -63,7 +63,7 @@ module "mariadb" {
 ## Example: mysql-complete
 ```hcl
 module "mysql" {
-  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.0"
+  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.1"
   name              = "mysql"
   engine            = "mysql"
   engine_version    = "8.0.28"
@@ -129,7 +129,7 @@ module "mysql" {
 ## Example: oracle_db
 ```hcl
 module "oracle" {
-  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.0"
+  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.1"
   name              = "oracle"
 
   engine            = "oracle-ee"
@@ -172,7 +172,7 @@ module "oracle" {
 ## Example: postgreSQL
 ```hcl
 module "postgresql" {
-  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.0"
+  source            = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.1"
   name              = "postgresql"
 
   engine            = "postgres"
@@ -215,7 +215,7 @@ module "postgresql" {
 ## Example: replica-mysql
 ```hcl
 module "mysql" {
-  source                 = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.0"
+  source                 = "git::https://github.com/opszero/terraform-aws-rds.git?ref=v1.0.1"
   name                   = "rds"
   engine                 = "mysql"
   engine_version         = "8.0"
