@@ -41,6 +41,7 @@ output "db_instance_name" {
 output "db_instance_username" {
   value       = module.mariadb.db_instance_username
   description = "The username for the MariaDB instance."
+  sensitive = true
 }
 
 output "db_instance_port" {

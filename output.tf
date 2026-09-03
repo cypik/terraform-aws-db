@@ -96,14 +96,17 @@ output "db_instance_cloudwatch_log_groups" {
 }
 
 output "db_parameter_group_id" {
-  value       = try(aws_db_parameter_group.this[0].id, "")
-  description = "The db parameter group id"
+  value       = aws_db_parameter_group.this[0].id
+  description = "The ID of the RDS DB parameter group"
 }
 
+
+
 output "db_parameter_group_arn" {
-  value       = try(aws_db_parameter_group.this[0].arn, "")
+  value       = length(aws_db_parameter_group.this) > 0 ? aws_db_parameter_group.this[0].arn : null
   description = "The ARN of the db parameter group"
 }
+
 
 output "db_subnet_group_id" {
   value       = try(aws_db_subnet_group.this[0].id, "")

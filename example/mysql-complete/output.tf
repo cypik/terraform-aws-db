@@ -51,6 +51,7 @@ output "db_instance_name" {
 output "db_instance_username" {
   value       = module.mysql.db_instance_username
   description = "The username for the MySQL database instance."
+  sensitive = true
 }
 
 output "db_instance_port" {

@@ -50,6 +50,7 @@ output "db_instance_name" {
 output "db_instance_username" {
   value       = module.postgresql.db_instance_username
   description = "The master username used for connecting to the RDS DB instance."
+  sensitive = true
 }
 
 output "db_instance_port" {

@@ -23,64 +23,53 @@ To use this module, you can include it in your Terraform configuration. Here's a
 ```hcl
 module "mariadb" {
   source      = "cypik/db/aws"
-  version     = "1.0.2"
+  version     = "1.0.3"
 
-  name        = "mariadb"
-  environment = "test22"
-  label_order = ["environment", "name"]
-
-  engine            = "MariaDB"
-  engine_version    = "11.4.5"
-  instance_class    = "db.t4g.micro"
-  engine_name       = "MariaDB"
-  allocated_storage = 16
-
-  db_name  = "test"
-  username = "user"
-  password = "esfsgcGdfawAhdxtfjm!"
-  port     = "3306"
-
-  maintenance_window = "Mon:00:00-Mon:03:00"
-  backup_window      = "03:00-06:00"
-  multi_az           = false
-
-
-  vpc_id        = module.vpc.vpc_id
-  allowed_ip    = [module.vpc.vpc_cidr_block]
-  allowed_ports = [3306]
-
-  family = "mariadb10.11"
-
-  backup_retention_period = 0
-
+  name                            = "mariadb"
+  environment                     = "test"
+  label_order                     = ["environment", "name"]
+  engine                          = "MariaDB"
+  engine_version                  = "11.4"
+  instance_class                  = "db.t4g.micro"
+  engine_name                     = "MariaDB"
+  allocated_storage               = 16
+  db_name                         = "test"
+  username                        = "user"
+  password                        = "esfsgcGdfawAhdxtfjm!"
+  port                            = "3306"
+  maintenance_window              = "Mon:00:00-Mon:03:00"
+  backup_window                   = "03:00-06:00"
+  multi_az                        = false
+  vpc_id                          = module.vpc.vpc_id
+  allowed_ip                      = [module.vpc.vpc_cidr_block]
+  allowed_ports                   = [3306]
+  family                          = "mariadb11.4"
+  backup_retention_period         = 0
   enabled_cloudwatch_logs_exports = ["audit", "general"]
-
-  subnet_ids          = module.private_subnets.public_subnet_id
-  publicly_accessible = true
-
-  major_engine_version = "10.11"
-
-  deletion_protection = true
-
-  ssm_parameter_endpoint_enabled = true
+  subnet_ids                      = module.private_subnets.public_subnet_id
+  publicly_accessible             = true
+  major_engine_version            = "11.4"
+  deletion_protection             = true
+  ssm_parameter_endpoint_enabled  = true
 }
 ```
 ## Example: mysql-complete
 ```hcl
 module "mysql" {
-  source                          = "cypik/db/aws"
-  version                         =  "1.0.2"
+  source      = "cypik/db/aws"
+  version     =  "1.0.3"
+
   name        = "mysql"
   environment = "test"
   label_order = ["environment", "name"]
 
   engine            = "mysql"
-  engine_version    = "8.0.40"
+  engine_version    = "8.0.35"
   instance_class    = "db.t4g.micro"
   allocated_storage = 16
-  vpc_id        = module.vpc.id
-  allowed_ip    = [module.vpc.vpc_cidr_block]
-  allowed_ports = [3306]
+  vpc_id            = module.vpc.vpc_id
+  allowed_ip        = [module.vpc.vpc_cidr_block]
+  allowed_ports     = [3306]
 
   db_name  = "test"
   username = "user"
@@ -137,19 +126,17 @@ module "mysql" {
 ## Example: oracle_db
 ```hcl
 module "oracle" {
-  source                              = "cypik/db/aws"
-  version                             = "1.0.2"
-  name        = "oracle"
-  environment = "test"
-  label_order = ["environment", "name"]
-
-  engine            = "oracle-ee"
-  engine_version    = "19"
+  source            = "cypik/db/aws"
+  version           = "1.0.3"
+  name              = "oracle"
+  environment       = "test"
+  label_order       = ["environment", "name"]
+  engine            = "oracle-ee-cdb"
+  engine_name       = "oracle-ee-cdb"
+  engine_version    = "19.0.0.0.ru-2025-01.rur-2025-01.r1"
   instance_class    = "db.m5.large"
-  engine_name       = "oracle-ee"
   allocated_storage = 16
   storage_encrypted = true
-  family            = "oracle-ee-19"
 
   db_name  = "test"
   username = "admin"
@@ -160,8 +147,7 @@ module "oracle" {
   backup_window      = "03:00-06:00"
   multi_az           = false
 
-
-  vpc_id        = module.vpc.id
+  vpc_id        = module.vpc.vpc_id
   allowed_ip    = [module.vpc.vpc_cidr_block]
   allowed_ports = [1521]
 
@@ -172,31 +158,29 @@ module "oracle" {
   subnet_ids          = module.private_subnets.public_subnet_id
   publicly_accessible = true
 
-  major_engine_version = "19"
-
+  major_engine_version                = "19"
+  family                              = "oracle-ee-cdb-19"
   deletion_protection                 = true
   iam_database_authentication_enabled = false
-
-  ssm_parameter_endpoint_enabled = true
+  ssm_parameter_endpoint_enabled      = true
 }
 ```
 ## Example: postgreSQL
 ```hcl
 module "postgresql" {
-  source                          = "cypik/db/aws"
-  version                         = "1.0.2"
+  source            = "cypik/db/aws"
+  version           = "1.0.3"
 
-  name        = "postgresql"
-  environment = "test"
-  label_order = ["environment", "name"]
-
+  name              = "postgresql"
+  environment       = "test"
+  label_order       = ["environment", "name"]
   engine            = "postgres"
-  engine_version    = "17.5-R1"
+  engine_version    = "16.3"
   instance_class    = "db.t4g.micro"
   allocated_storage = 16
   engine_name       = "postgres"
   storage_encrypted = true
-  family            = "postgres14"
+  family            = "postgres16"
 
   db_name  = "test"
   username = "dbname"
@@ -208,7 +192,7 @@ module "postgresql" {
   multi_az           = false
 
 
-  vpc_id        = module.vpc.id
+  vpc_id        = module.vpc.vpc_id
   allowed_ip    = [module.vpc.vpc_cidr_block]
   allowed_ports = [5432]
 
@@ -219,7 +203,7 @@ module "postgresql" {
   subnet_ids          = module.private_subnets.public_subnet_id
   publicly_accessible = true
 
-  major_engine_version = "16.3"
+  major_engine_version = "16"
 
   deletion_protection = true
 
@@ -228,52 +212,56 @@ module "postgresql" {
 ```
 ## Example: replica-mysql
 ```hcl
-module "mysql" {
-  source                 = "cypik/db/aws"
-  version                = "1.0.2"
-  name                   = "rds"
-  environment            = "test"
-  label_order            = ["environment", "name"]
-  enabled                = true
-  engine                 = "mysql"
-  engine_version         = "8.0.40"
+module "replica_mysql" {
+  source      = "cypik/db/aws"
+  version     = "1.0.3"
+  name        = "rds"
+  environment = "test"
+  label_order = ["environment", "name"]
+  identifier  = ""
+
+  # RDS Engine
+  engine               = "mysql"
+  engine_version       = "8.0.40"
+  major_engine_version = "8.0"
+  family               = "mysql8.0"
+
+  # Instance Type
   instance_class         = "db.t4g.micro"
   replica_instance_class = "db.t4g.micro"
-  allocated_storage      = 16
-  identifier             = ""
-  snapshot_identifier    = ""
-  kms_key_id             = ""
   enabled_read_replica   = true
   enabled_replica        = true
 
+  # Storage
+  allocated_storage = 16
+  kms_key_id        = ""
+
+  # DB Credentials
   db_name  = "replica"
   username = "replica_mysql"
   password = "clkjvnsdikjhdsijfsdli"
+  port     = 3306
 
-  port               = 3306
-  maintenance_window = "Mon:00:00-Mon:03:00"
-  backup_window      = "03:00-06:00"
-  multi_az           = true
-
-  vpc_id        = module.vpc.id
-  allowed_ip    = [module.vpc.vpc_cidr_block]
-  allowed_ports = [3306]
-
-  backup_retention_period = 1
-
-  enabled_cloudwatch_logs_exports = ["general"]
-
+  # Networking
+  vpc_id              = module.vpc.vpc_id
   subnet_ids          = module.subnets.public_subnet_id
+  allowed_ip          = [module.vpc.vpc_cidr_block]
+  allowed_ports       = [3306]
   publicly_accessible = false
 
-  family = "mysql8.0"
-
-  major_engine_version       = "8.0"
+  # Maintenance
+  maintenance_window         = "Mon:00:00-Mon:03:00"
+  backup_window              = "03:00-06:00"
+  backup_retention_period    = 1
+  multi_az                   = true
   auto_minor_version_upgrade = false
 
-  deletion_protection = true
+  # Logging & Monitoring
+  enabled_cloudwatch_logs_exports = ["general"]
+  ssm_parameter_endpoint_enabled  = true
 
-  ssm_parameter_endpoint_enabled = true
+  # Deletion protection
+  deletion_protection = true
 }
 ```
 
@@ -290,50 +278,50 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 6.0.0-beta3 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | 3.7.2 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.15.8 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.58.0 |
+| <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 4.3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.0.0-beta3 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.58.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_labels"></a> [labels](#module\_labels) | cypik/labels/aws | 1.0.2 |
+| <a name="module_labels"></a> [labels](#module\_labels) | cypik/labels/aws | 1.0.4 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_cloudwatch_log_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/cloudwatch_log_group) | resource |
-| [aws_db_instance.read](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_instance) | resource |
-| [aws_db_instance.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_instance) | resource |
-| [aws_db_option_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_option_group) | resource |
-| [aws_db_parameter_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_parameter_group) | resource |
-| [aws_db_subnet_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/db_subnet_group) | resource |
-| [aws_iam_role.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy.inline_policies](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role_policy) | resource |
-| [aws_iam_role_policy_attachment.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.managed_policies](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_kms_alias.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/kms_alias) | resource |
-| [aws_kms_key.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/kms_key) | resource |
-| [aws_security_group.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group) | resource |
-| [aws_security_group_rule.egress](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group_rule) | resource |
-| [aws_security_group_rule.egress_ipv6](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group_rule) | resource |
-| [aws_security_group_rule.ingress](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/security_group_rule) | resource |
-| [aws_ssm_parameter.secret-endpoint](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/resources/ssm_parameter) | resource |
-| [random_id.password](https://registry.terraform.io/providers/hashicorp/random/3.7.2/docs/resources/id) | resource |
-| [random_id.snapshot_identifier](https://registry.terraform.io/providers/hashicorp/random/3.7.2/docs/resources/id) | resource |
-| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/caller_identity) | data source |
-| [aws_iam_policy_document.default](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/iam_policy_document) | data source |
-| [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/6.0.0-beta3/docs/data-sources/partition) | data source |
+| [aws_cloudwatch_log_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
+| [aws_db_instance.read](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | resource |
+| [aws_db_instance.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | resource |
+| [aws_db_option_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_option_group) | resource |
+| [aws_db_parameter_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group) | resource |
+| [aws_db_subnet_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group) | resource |
+| [aws_iam_role.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.inline_policies](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy_attachment.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.managed_policies](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_kms_alias.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_alias) | resource |
+| [aws_kms_key.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
+| [aws_security_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group_rule.egress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.egress_ipv6](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.ingress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_ssm_parameter.secret-endpoint](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
+| [random_id.password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [random_id.snapshot_identifier](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.enhanced_monitoring](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
 
 ## Inputs
 
@@ -384,7 +372,7 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 | <a name="input_enabled_replica"></a> [enabled\_replica](#input\_enabled\_replica) | A list of enabled replica | `bool` | `false` | no |
 | <a name="input_engine"></a> [engine](#input\_engine) | The database engine to use | `string` | `"mysql"` | no |
 | <a name="input_engine_name"></a> [engine\_name](#input\_engine\_name) | Specifies the name of the engine that this option group should be associated with | `string` | `"mysql"` | no |
-| <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The engine version to use | `string` | `null` | no |
+| <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The engine version to use | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
 | <a name="input_family"></a> [family](#input\_family) | The family of the DB parameter group | `string` | `null` | no |
 | <a name="input_force_detach_policies"></a> [force\_detach\_policies](#input\_force\_detach\_policies) | Force detaching any policies the role has before destroying it. | `bool` | `false` | no |
@@ -404,7 +392,7 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 | <a name="input_license_model"></a> [license\_model](#input\_license\_model) | License model information for this DB instance. Optional, but required for some DB engines, i.e. Oracle SE1 | `string` | `null` | no |
 | <a name="input_log_group_class"></a> [log\_group\_class](#input\_log\_group\_class) | Specifies the log class of the log group. Possible values: STANDARD or INFREQUENT\_ACCESS. | `string` | `"STANDARD"` | no |
 | <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | The window to perform maintenance in. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00' | `string` | `null` | no |
-| <a name="input_major_engine_version"></a> [major\_engine\_version](#input\_major\_engine\_version) | Specifies the major version of the engine that this option group should be associated with | `string` | `null` | no |
+| <a name="input_major_engine_version"></a> [major\_engine\_version](#input\_major\_engine\_version) | Specifies the major version of the engine that this option group should be associated with | `string` | `""` | no |
 | <a name="input_managed_policy_arns"></a> [managed\_policy\_arns](#input\_managed\_policy\_arns) | List of IAM managed policy ARNs to attach to the IAM role. | `list(string)` | `[]` | no |
 | <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'info@cypik.com'. | `string` | `"info@cypik.com"` | no |
 | <a name="input_max_allocated_storage"></a> [max\_allocated\_storage](#input\_max\_allocated\_storage) | Specifies the value for Storage Autoscaling | `number` | `0` | no |
@@ -482,7 +470,7 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 | <a name="output_db_instance_status"></a> [db\_instance\_status](#output\_db\_instance\_status) | The RDS instance status |
 | <a name="output_db_instance_username"></a> [db\_instance\_username](#output\_db\_instance\_username) | The master username for the database |
 | <a name="output_db_parameter_group_arn"></a> [db\_parameter\_group\_arn](#output\_db\_parameter\_group\_arn) | The ARN of the db parameter group |
-| <a name="output_db_parameter_group_id"></a> [db\_parameter\_group\_id](#output\_db\_parameter\_group\_id) | The db parameter group id |
+| <a name="output_db_parameter_group_id"></a> [db\_parameter\_group\_id](#output\_db\_parameter\_group\_id) | The ID of the RDS DB parameter group |
 | <a name="output_db_subnet_group_id"></a> [db\_subnet\_group\_id](#output\_db\_subnet\_group\_id) | The db subnet group name |
 | <a name="output_db_subnet_group_name"></a> [db\_subnet\_group\_name](#output\_db\_subnet\_group\_name) | The db subnet group name |
 | <a name="output_enhanced_monitoring_iam_role_arn"></a> [enhanced\_monitoring\_iam\_role\_arn](#output\_enhanced\_monitoring\_iam\_role\_arn) | The Amazon Resource Name (ARN) specifying the monitoring role |

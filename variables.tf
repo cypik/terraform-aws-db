@@ -134,7 +134,7 @@ variable "engine" {
 
 variable "engine_version" {
   type        = string
-  default     = null
+  default     = ""
   description = "The engine version to use"
 }
 
@@ -393,7 +393,7 @@ variable "engine_name" {
 
 variable "major_engine_version" {
   type        = string
-  default     = null
+  default     = ""
   description = "Specifies the major version of the engine that this option group should be associated with"
 }
 

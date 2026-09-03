@@ -1,10 +1,10 @@
 provider "aws" {
-  region = "us-east-2"
+  region = "eu-west-2"
 }
 
 module "vpc" {
   source      = "cypik/vpc/aws"
-  version     = "1.0.2"
+  version     = "1.0.5"
   name        = "vpc"
   environment = "test"
   label_order = ["environment", "name"]
@@ -14,12 +14,12 @@ module "vpc" {
 
 module "subnets" {
   source      = "cypik/subnet/aws"
-  version     = "1.0.3"
+  version     = "1.0.7"
   name        = "subnets"
   environment = "test"
   label_order = ["environment", "name"]
 
-  availability_zones = ["us-east-2a", "us-east-2b", "us-east-2c"]
+  availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
   vpc_id             = module.vpc.vpc_id
   type               = "public"
   igw_id             = module.vpc.igw_id
@@ -28,48 +28,54 @@ module "subnets" {
 }
 
 module "mysql" {
-  source                 = "../../"
-  name                   = "rds"
-  environment            = "test"
-  label_order            = ["environment", "name"]
-  enabled                = true
-  engine                 = "mysql"
-  engine_version         = "8.0.40"
+  source = "../../"
+
+  # Labels & Identification
+  name        = "rds"
+  environment = "test"
+  label_order = ["environment", "name"]
+  identifier  = ""
+
+  # RDS Engine
+  engine               = "mysql"
+  engine_version       = "8.0.40"
+  major_engine_version = "8.0"
+  family               = "mysql8.0"
+
+  # Instance Type
   instance_class         = "db.t4g.micro"
   replica_instance_class = "db.t4g.micro"
-  allocated_storage      = 16
-  identifier             = ""
-  snapshot_identifier    = ""
-  kms_key_id             = ""
   enabled_read_replica   = true
   enabled_replica        = true
 
+  # Storage
+  allocated_storage = 16
+  kms_key_id        = ""
+
+  # DB Credentials
   db_name  = "replica"
   username = "replica_mysql"
   password = "clkjvnsdikjhdsijfsdli"
+  port     = 3306
 
-  port               = 3306
-  maintenance_window = "Mon:00:00-Mon:03:00"
-  backup_window      = "03:00-06:00"
-  multi_az           = true
-
-  vpc_id        = module.vpc.vpc_id
-  allowed_ip    = [module.vpc.vpc_cidr_block]
-  allowed_ports = [3306]
-
-  backup_retention_period = 1
-
-  enabled_cloudwatch_logs_exports = ["general"]
-
+  # Networking
+  vpc_id              = module.vpc.vpc_id
   subnet_ids          = module.subnets.public_subnet_id
+  allowed_ip          = [module.vpc.vpc_cidr_block]
+  allowed_ports       = [3306]
   publicly_accessible = false
 
-  family = "mysql8.0"
-
-  major_engine_version       = "8.0"
+  # Maintenance
+  maintenance_window         = "Mon:00:00-Mon:03:00"
+  backup_window              = "03:00-06:00"
+  backup_retention_period    = 1
+  multi_az                   = true
   auto_minor_version_upgrade = false
 
-  deletion_protection = true
+  # Logging & Monitoring
+  enabled_cloudwatch_logs_exports = ["general"]
+  ssm_parameter_endpoint_enabled  = true
 
-  ssm_parameter_endpoint_enabled = true
+  # Deletion protection
+  deletion_protection = true
 }
