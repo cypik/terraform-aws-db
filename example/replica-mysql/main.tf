@@ -4,7 +4,7 @@ provider "aws" {
 
 module "vpc" {
   source      = "cypik/vpc/aws"
-  version     = "1.0.3"
+  version     = "1.0.5"
   name        = "vpc"
   environment = "test"
   label_order = ["environment", "name"]
@@ -14,7 +14,7 @@ module "vpc" {
 
 module "subnets" {
   source      = "cypik/subnet/aws"
-  version     = "1.0.3"
+  version     = "1.0.7"
   name        = "subnets"
   environment = "test"
   label_order = ["environment", "name"]
@@ -28,19 +28,19 @@ module "subnets" {
 }
 
 module "mysql" {
-  source                 = "../../"
+  source = "../../"
 
   # Labels & Identification
-  name                   = "rds"
-  environment            = "test"
-  label_order            = ["environment", "name"]
-  identifier             = ""
+  name        = "rds"
+  environment = "test"
+  label_order = ["environment", "name"]
+  identifier  = ""
 
   # RDS Engine
-  engine                 = "mysql"
-  engine_version         = "8.0.40"            # ✅ Valid full engine version
-  major_engine_version   = "8.0"               # ✅ Only major version
-  family                 = "mysql8.0"          # ✅ Must match engine major version
+  engine               = "mysql"
+  engine_version       = "8.0.40"
+  major_engine_version = "8.0"
+  family               = "mysql8.0"
 
   # Instance Type
   instance_class         = "db.t4g.micro"
@@ -49,27 +49,27 @@ module "mysql" {
   enabled_replica        = true
 
   # Storage
-  allocated_storage      = 16
-  kms_key_id             = ""
+  allocated_storage = 16
+  kms_key_id        = ""
 
   # DB Credentials
-  db_name                = "replica"
-  username               = "replica_mysql"
-  password               = "clkjvnsdikjhdsijfsdli"
-  port                   = 3306
+  db_name  = "replica"
+  username = "replica_mysql"
+  password = "clkjvnsdikjhdsijfsdli"
+  port     = 3306
 
   # Networking
-  vpc_id                 = module.vpc.vpc_id
-  subnet_ids             = module.subnets.public_subnet_id
-  allowed_ip             = [module.vpc.vpc_cidr_block]
-  allowed_ports          = [3306]
-  publicly_accessible    = false
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = module.subnets.public_subnet_id
+  allowed_ip          = [module.vpc.vpc_cidr_block]
+  allowed_ports       = [3306]
+  publicly_accessible = false
 
   # Maintenance
-  maintenance_window     = "Mon:00:00-Mon:03:00"
-  backup_window          = "03:00-06:00"
-  backup_retention_period = 1
-  multi_az               = true
+  maintenance_window         = "Mon:00:00-Mon:03:00"
+  backup_window              = "03:00-06:00"
+  backup_retention_period    = 1
+  multi_az                   = true
   auto_minor_version_upgrade = false
 
   # Logging & Monitoring
@@ -77,5 +77,5 @@ module "mysql" {
   ssm_parameter_endpoint_enabled  = true
 
   # Deletion protection
-  deletion_protection    = true
+  deletion_protection = true
 }

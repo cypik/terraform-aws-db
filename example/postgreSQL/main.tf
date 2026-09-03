@@ -4,7 +4,7 @@ provider "aws" {
 
 module "vpc" {
   source      = "cypik/vpc/aws"
-  version     = "1.0.3"
+  version     = "1.0.5"
   name        = "vpc"
   environment = "test"
   label_order = ["environment", "name"]
@@ -13,7 +13,7 @@ module "vpc" {
 
 module "private_subnets" {
   source      = "cypik/subnet/aws"
-  version     = "1.0.3"
+  version     = "1.0.7"
   name        = "subnets"
   environment = "test"
   label_order = ["name", "environment"]

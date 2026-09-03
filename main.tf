@@ -1,6 +1,6 @@
 module "labels" {
   source      = "cypik/labels/aws"
-  version     = "1.0.2"
+  version     = "1.0.4"
   name        = var.name
   environment = var.environment
   managedby   = var.managedby
@@ -48,8 +48,8 @@ resource "aws_db_subnet_group" "this" {
 }
 
 resource "aws_db_parameter_group" "this" {
-  count = var.enabled ? 1 : 0
-  family     = var.family
+  count  = var.enabled ? 1 : 0
+  family = var.family
 
   dynamic "parameter" {
     for_each = var.parameters

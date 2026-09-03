@@ -4,7 +4,7 @@ provider "aws" {
 
 module "vpc" {
   source      = "cypik/vpc/aws"
-  version     = "1.0.3"
+  version     = "1.0.5"
   name        = "vpc"
   environment = "test"
   label_order = ["environment", "name"]
@@ -14,7 +14,7 @@ module "vpc" {
 
 module "private_subnets" {
   source              = "cypik/subnet/aws"
-  version             = "1.0.3"
+  version             = "1.0.7"
   name                = "subnets"
   environment         = "test"
   label_order         = ["name", "environment"]
@@ -61,7 +61,7 @@ module "oracle" {
   subnet_ids          = module.private_subnets.public_subnet_id
   publicly_accessible = true
 
-  major_engine_version                 = "19"
+  major_engine_version                = "19"
   family                              = "oracle-ee-cdb-19"
   deletion_protection                 = true
   iam_database_authentication_enabled = false
